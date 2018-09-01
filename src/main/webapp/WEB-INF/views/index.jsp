@@ -14,7 +14,7 @@
 </head>
 <body>
 <div  class="easyui-layout" fit="true" style="width:600px;height:400px;">   
-	    <div data-options="region:'north'" style="height:100px;background:url('banner-pic.gif') no-repeat;background-size:cover; ">
+	    <div data-options="region:'north'" style="height:100px;background:url('/img/banner-pic.gif') no-repeat;background-size:cover; ">
 	    	<h1>小码哥员工管理系统</h1>
 	    </div>   
 	    <div data-options="region:'west'" style="width:150px;">
@@ -36,7 +36,7 @@
 	    		</div>
 	    	</div>
 	    </div>   
-	    <div data-options="region:'south'" style="height:30px;background:url('banner-pic.gif') no-repeat;background-size:cover; ">
+	    <div data-options="region:'south'" style="height:30px;background:url('/img/banner-pic.gif') no-repeat;background-size:cover; ">
 	    	<center>版权信息</center>
 	    </div>   
 	</div> 

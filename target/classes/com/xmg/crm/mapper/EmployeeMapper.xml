@@ -89,5 +89,12 @@
 			limit #{start},#{rows}
 		</if>
 	</select>
+	
+	<select id="queryByLogin" resultMap="BaseResultMap">
+	     select
+		<include refid="fieldSql" />
+		from employee e left join department d on d.id = e.dept_id
+		where e.username = #{username} and e.password = #{password}
+	</select>
 
 </mapper>

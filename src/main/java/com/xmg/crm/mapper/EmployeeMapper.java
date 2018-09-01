@@ -5,6 +5,8 @@ import com.xmg.crm.query.QueryObject;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 public interface EmployeeMapper {
     int deleteByPrimaryKey(Long id);
 
@@ -19,4 +21,6 @@ public interface EmployeeMapper {
 	Long queryByConditionCount(QueryObject qo);
 
 	List<Employee> queryByCondition(QueryObject qo);
+
+	Employee queryByLogin(@Param("username")String username, @Param("password")String password);
 }

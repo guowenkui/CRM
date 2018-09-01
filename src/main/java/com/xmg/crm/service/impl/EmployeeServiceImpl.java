@@ -48,4 +48,10 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		}
 	}
 
+	@Override
+	public Employee queryByLogin(String username, String password) {
+		
+		return dao.queryByLogin(username,password);
+	}
+
 }

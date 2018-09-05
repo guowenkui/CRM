@@ -77,7 +77,7 @@
 
 	<sql id="conditionSql"></sql>
 	<select id="queryByConditionCount" resultType="long">
-		select Count(*) from employ e
+		select Count(*) from employee e
 		<include refid="conditionSql" />
 	</select>
 	<select id="queryByCondition" resultMap="BaseResultMap">

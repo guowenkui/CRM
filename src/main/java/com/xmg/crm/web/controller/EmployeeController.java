@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xmg.crm.domain.Employee;
+import com.xmg.crm.page.PageResult;
+import com.xmg.crm.query.EmployeeQueryObject;
 import com.xmg.crm.service.IEmployeeService;
 import com.xmg.crm.util.UserContext;
 
@@ -19,8 +21,27 @@ import lombok.val;
 @Controller
 public class EmployeeController {
 
+	
 	@Autowired
 	private IEmployeeService employeeService;
+	
+	@RequestMapping("/employee")
+	
+	public String index(){
+		System.out.println("IndexController.employeeList");
+		return "employee";
+	}
+	
+	
+	@RequestMapping("/employee_list")
+	@ResponseBody
+	public PageResult list(EmployeeQueryObject qo){
+		PageResult result = null;
+		result = employeeService.SelectByCondition(qo);
+		return result;
+	}
+	
+	
 	@RequestMapping("/login")
 	@ResponseBody
 	public Map login(String username,String password,HttpSession session){
@@ -37,4 +58,6 @@ public class EmployeeController {
 		}
 		return result;
 	}
+	
+	
 }

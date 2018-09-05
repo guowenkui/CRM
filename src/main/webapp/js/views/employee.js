@@ -1,0 +1,21 @@
+$(function() {
+	$("#employ_datagrid").datagrid({
+		url:"/employee_list",
+		fit:true,
+		pagination:true,
+		rownumbers:true,
+		singleSelect:true,
+		columns:[[
+		          {title:"账号",field:"username",width:1},
+		          {title:"真实姓名",field:"realname",width:1},
+		          {title:"密码",field:"password",width:1},
+		          {title:"联系方式",field:"tel",width:1},
+		          {title:"邮箱",field:"email",width:1},
+		          {title:"部门",field:"dept",width:1},
+		          {title:"入职时间",field:"inputTime",width:1},
+		          {title:"状态",field:"state",width:1},
+		          ]],
+		fitColumns:true,
+		toolbar:'#employee_datagrid_bt',
+	});
+});

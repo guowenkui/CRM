@@ -23,6 +23,7 @@
 	<div id="employee_dialog">
 	   <form id="employee_dialog_form" action="" method="post">
 	      <table align="center" style="margin-top: 15px">
+	          <input type="hidden" name="id">
 	          <tr> 
 	               <td>账号</td>
 	               <td><input type="text" name="username"></td>

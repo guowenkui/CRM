@@ -59,6 +59,28 @@ public class EmployeeController {
 	}
 	
 	
+	@RequestMapping("/employee_update")
+	@ResponseBody
+	public Map update(Employee emp){
+		Map<String, Object> result = new HashMap<String,Object>();
+		try {
+			int effectCount = employeeService.update(emp);
+			if (effectCount>0) {
+				result.put("success", true);
+				result.put("msg","更新成功");
+			} else {
+				result.put("success", false);
+				result.put("msg","更新失败");
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			result.put("success", false);
+			result.put("msg","更新异常,请联系管理员");
+		}
+		return result;
+	}
+	
 	@RequestMapping("/employee_list")
 	@ResponseBody
 	public PageResult list(EmployeeQueryObject qo){

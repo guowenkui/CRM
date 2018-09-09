@@ -39,17 +39,10 @@
 	<update id="updateByPrimaryKey" parameterType="com.xmg.crm.domain.Employee">
 		update employee
 		set username = #{username,jdbcType=VARCHAR},
-		realName =
-		#{realname,jdbcType=VARCHAR},
-		password = #{password,jdbcType=VARCHAR},
+		realName = #{realname,jdbcType=VARCHAR},
 		tel = #{tel,jdbcType=VARCHAR},
 		email = #{email,jdbcType=VARCHAR},
-		dept_id = #{dept.id,jdbcType=VARCHAR},
-		inputTime =
-		#{inputtime,jdbcType=TIMESTAMP},
-		state = #{state,jdbcType=BIT},
-		admin =
-		#{admin,jdbcType=BIT}
+		dept_id = #{dept.id,jdbcType=VARCHAR}
 		where id = #{id,jdbcType=BIGINT}
 	</update>
 

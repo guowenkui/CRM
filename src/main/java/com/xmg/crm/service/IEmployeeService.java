@@ -14,4 +14,5 @@ public interface IEmployeeService {
 	List<Employee> selectAll();
 	PageResult SelectByCondition(QueryObject qo );
 	Employee queryByLogin(String username,String password);
+	int updateState(Long id);
 }

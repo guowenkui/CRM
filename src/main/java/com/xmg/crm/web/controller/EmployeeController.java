@@ -32,6 +32,30 @@ public class EmployeeController {
 		return "employee";
 	}
 	
+	
+	@RequestMapping("/employee_delete")
+	@ResponseBody
+	public Map delete(Long id){
+		Map<String, Object> result = new HashMap<String,Object>();
+		try {
+			int effectCount =  employeeService.updateState(id);
+			if (effectCount>0) {
+				result.put("success", true);
+				result.put("msg", "离职成功");
+			}else {
+				result.put("success", false);
+				result.put("msg", "离职失败");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			result.put("success", false);
+			result.put("msg", "离职异常,请联系管理员");
+		}
+		return result;
+	}
+	
+	
+	
 	@RequestMapping("/employee_save")
 	@ResponseBody
 	public Map save(Employee emp){

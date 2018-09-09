@@ -12,10 +12,20 @@ $(function() {
 		          {title:"邮箱",field:"email",width:1},
 		          {title:"部门",field:"dept",width:1,formatter:deptFormatter},
 		          {title:"入职时间",field:"inputTime",width:1},
-		          {title:"状态",field:"state",width:1},
+		          {title:"状态",field:"state",width:1,formatter:statusFormatter},
 		          ]],
 		fitColumns:true,
 		toolbar:'#employee_datagrid_bt',
+		onClickRow: function (rowIndex, rowData) {
+			if (rowData.state) {
+				$("#employee_datagrid_bt a").eq(1).linkbutton("enable");
+				$("#employee_datagrid_bt a").eq(2).linkbutton("enable");
+			} else {
+				//让按钮变灰
+				$("#employee_datagrid_bt a").eq(1).linkbutton("disable");
+				$("#employee_datagrid_bt a").eq(2).linkbutton("disable");
+			}
+		}
 	});
 	
 	$("#employee_dialog").dialog({
@@ -54,7 +64,28 @@ function edit() {
 	}
 }
 function del() {
-	
+	//用户是否有选择记录
+	var rowData = $("#employ_datagrid").datagrid("getSelected");
+	if (rowData) {
+		//询问用户确定需要离职员工
+		$.messager.confirm("温馨提示","你确定需要离职该员工吗",function(yes){
+			if(yes){
+				$.get("/employee_delete?id="+rowData.id,function(data){
+					if (data.success) {
+						$.messager.alert("温馨提示", data.msg, "info", function() {
+							//刷新数据
+							$("#employ_datagrid").datagrid("load");
+						});
+					} else {
+
+						$.messager.alert("温馨提示", data.msg, "warning");
+					}
+				},"json");
+			}
+		});
+	} else {
+		$.messager.alert("温馨提示","请选择一条需要离职的员工","warning");
+	}
 }
 function refresh() {
 	
@@ -100,5 +131,13 @@ function deptFormatter(value,record,index) {
 		return value.name;
 	} else {
 		return value;
+	}
+}
+
+function statusFormatter(value,record,index) {
+	if (value) {
+		return "<font color='green'>在职</font>";
+	} else {
+		return "<font color='red'>离职</font>";
 	}
 }

@@ -54,4 +54,9 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		return dao.queryByLogin(username,password);
 	}
 
+	@Override
+	public int updateState(Long id) {
+		return dao.updateState(id);
+	}
+
 }

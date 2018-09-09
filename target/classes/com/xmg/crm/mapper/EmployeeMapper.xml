@@ -89,5 +89,9 @@
 		from employee e left join department d on d.id = e.dept_id
 		where e.username = #{username} and e.password = #{password}
 	</select>
+	
+	<update id="updateState">
+	   update employee set state = 0 where id = #{id}
+	</update>
 
 </mapper>

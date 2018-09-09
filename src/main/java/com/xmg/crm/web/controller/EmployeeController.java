@@ -1,5 +1,6 @@
 package com.xmg.crm.web.controller;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,10 +27,35 @@ public class EmployeeController {
 	private IEmployeeService employeeService;
 	
 	@RequestMapping("/employee")
-	
 	public String index(){
 		System.out.println("IndexController.employeeList");
 		return "employee";
+	}
+	
+	@RequestMapping("/employee_save")
+	@ResponseBody
+	public Map save(Employee emp){
+		Map<String, Object> result = new HashMap<String,Object>();
+		try {
+			emp.setAdmin(false);
+			emp.setInputtime(new Date());
+			emp.setState(true);
+			emp.setPassword("6666");
+			int effectCount = employeeService.save(emp);
+			if (effectCount>0) {
+				result.put("success", true);
+				result.put("msg","保存成功");
+			} else {
+				result.put("success", false);
+				result.put("msg","保存失败");
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			result.put("success", false);
+			result.put("msg","保存异常,请联系管理员");
+		}
+		return result;
 	}
 	
 	

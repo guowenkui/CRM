@@ -14,9 +14,9 @@ public class Department {
 
     private String name;
 
-    private Long managerId;
+    private Employee manager;
 
-    private Long parentId;
+    private Department parent;
 
     private Boolean state;
 }

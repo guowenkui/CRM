@@ -1,0 +1,6 @@
+127.0.0.1 - - [01/Jan/1970:07:59:59 +0800] "-" 400 - null 0
+127.0.0.1 - - [10/Sep/2018:20:34:44 +0800] "GET /api/toolbox/geturl.php?h=85A317B567A5E8C54616E43794B67309&v=9.0.0.2472&r=0000_sogoupinyin_9.0b HTTP/1.1" 404 995 http-bio-80-exec-7 190
+127.0.0.1 - - [10/Sep/2018:20:54:22 +0800] "GET /api/toolbox/geturl.php?h=85A317B567A5E8C54616E43794B67309&v=9.0.0.2472&r=0000_sogoupinyin_9.0b HTTP/1.1" 404 995 http-bio-80-exec-8 8
+127.0.0.1 - - [10/Sep/2018:22:00:53 +0800] "GET /api/toolbox/geturl.php?h=85A317B567A5E8C54616E43794B67309&v=9.0.0.2472&r=0000_sogoupinyin_9.0b HTTP/1.1" 404 995 http-bio-80-exec-5 9
+127.0.0.1 - - [10/Sep/2018:22:25:25 +0800] "GET /jsp/personalcenter/pcgettime.jsp?h=85A317B567A5E8C54616E43794B67309&v=9.0.0.2472&r=0000_sogoupinyin_9.0b&St=1&Ut=1 HTTP/1.1" 404 1015 http-bio-80-exec-6 16
+127.0.0.1 - - [10/Sep/2018:22:27:41 +0800] "GET /client/validateinstall.php?v=9.1.0.2618&h=85A317B567A5E8C54616E43794B67309&r=0000_sogoupinyin_9.0b&pp=PinyinUp.exe&mode=1 HTTP/1.1" 404 1003 http-bio-80-exec-4 3

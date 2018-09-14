@@ -141,3 +141,13 @@ function statusFormatter(value,record,index) {
 		return "<font color='red'>离职</font>";
 	}
 }
+
+function searchContent() {
+	var param ={};
+	var paramArr = $("#employee_searchForm").serializeArray();
+	for (var i = 0; i < paramArr.length; i++) {
+		param[paramArr[i].name] = paramArr[i].value;
+	}
+	
+	$("#employ_datagrid").datagrid("load",param);
+}

@@ -13,10 +13,27 @@
 	<!-- 定义数据表格按钮 -->
 	
 	<div id="employee_datagrid_bt">
-	    <a class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="add()">新增</a>
-	    <a class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="edit()">编辑</a>
-	    <a class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="del()">离职</a>
-	    <a class="easyui-linkbutton" iconCls="icon-reload" plain="true" onclick="refresh()">刷新</a>
+	     <div>
+	          <a class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="add()">新增</a>
+	          <a class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="edit()">编辑</a>
+	          <a class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="del()">离职</a>
+	          <a class="easyui-linkbutton" iconCls="icon-reload" plain="true" onclick="refresh()">刷新</a>
+	     </div>
+	     <div>
+	          <form id="employee_searchForm" action="">
+	                                   关键字:<input type="text" name="keyword">
+	                                   日期:<input class="easyui-datebox" name="beginDate">
+	              -
+	              <input class="easyui-datebox" name="endDate">
+	                                   状态:
+	              <select name = "state">
+	                 <option value="">全部</option>
+	                 <option value="1">正常</option>
+	                 <option value="0">离职</option>
+	                 </select>
+	              <a class="easyui-linkbutton" iconCls="icon-search" onclick="searchContent()">搜索</a>
+	          </form>                       
+	     </div>   
 	</div>
 	
 	<!-- 定义对话框 -->

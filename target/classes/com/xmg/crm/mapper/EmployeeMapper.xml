@@ -68,7 +68,22 @@
 	</select>
 
 
-	<sql id="conditionSql"></sql>
+	<sql id="conditionSql">
+	    <where>
+	        <if test="state!=null">
+	          AND e.state = #{state}
+	        </if>
+	        <if test="keyword!=null">
+	           AND (e.username like concat('%',#{keyword},'%') OR e.realname like concat('%',#{keyword},'%') )
+	        </if>
+	        <if test="beginDate!=null">
+	        	AND e.inputtime &gt;=#{beginDate}
+	        </if>
+	        <if test="endDate!=null">
+	        	AND e.inputtime &lt;=#{endDate}
+	        </if>
+	    </where>
+	</sql>
 	<select id="queryByConditionCount" resultType="long">
 		select Count(*) from employee e
 		<include refid="conditionSql" />

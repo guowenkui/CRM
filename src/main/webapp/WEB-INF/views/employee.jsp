@@ -14,10 +14,10 @@
 	
 	<div id="employee_datagrid_bt">
 	     <div>
-	          <a class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="add()">新增</a>
-	          <a class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="edit()">编辑</a>
-	          <a class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="del()">离职</a>
-	          <a class="easyui-linkbutton" iconCls="icon-reload" plain="true" onclick="refresh()">刷新</a>
+	          <a class="easyui-linkbutton" iconCls="icon-add" plain="true" data-cmd="add">新增</a>
+	          <a class="easyui-linkbutton" iconCls="icon-edit" plain="true" data-cmd="edit">编辑</a>
+	          <a class="easyui-linkbutton" iconCls="icon-remove" plain="true" data-cmd="del">离职</a>
+	          <a class="easyui-linkbutton" iconCls="icon-reload" plain="true" data-cmd="refresh">刷新</a>
 	     </div>
 	     <div>
 	          <form id="employee_searchForm" action="">
@@ -31,7 +31,7 @@
 	                 <option value="1">正常</option>
 	                 <option value="0">离职</option>
 	                 </select>
-	              <a class="easyui-linkbutton" iconCls="icon-search" onclick="searchContent()">搜索</a>
+	              <a class="easyui-linkbutton" iconCls="icon-search" data-cmd="searchContent">搜索</a>
 	          </form>                       
 	     </div>   
 	</div>
@@ -68,8 +68,8 @@
 	
 	<!-- 定义对话框底部按钮 -->
 	<div id="employee_dialog_bb">
-	    <a class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="save()">保存</a>
-	    <a class="easyui-linkbutton" iconCls="icon-cancel" plain="true" onclick="cancel()">取消</a>
+	    <a class="easyui-linkbutton" iconCls="icon-save" plain="true" data-cmd="save">保存</a>
+	    <a class="easyui-linkbutton" iconCls="icon-cancel" plain="true"  data-cmd="cancel">取消</a>
 	</div>
 
 </body>

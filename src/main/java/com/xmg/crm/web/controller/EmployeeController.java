@@ -6,12 +6,17 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.weaver.loadtime.Aj;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xmg.crm.domain.Employee;
+import com.xmg.crm.page.AjaxResult;
 import com.xmg.crm.page.PageResult;
 import com.xmg.crm.query.EmployeeQueryObject;
 import com.xmg.crm.service.IEmployeeService;
@@ -32,24 +37,32 @@ public class EmployeeController {
 		return "employee";
 	}
 	
+	@ModelAttribute
+	public void before(Long id,Model model){
+		
+		if (id!=null) {
+			//更新操作
+			Employee emp = new Employee();
+			emp.setPassword("8888");
+			model.addAttribute(emp);
+		}
+	}
+	
 	
 	@RequestMapping("/employee_delete")
 	@ResponseBody
-	public Map delete(Long id){
-		Map<String, Object> result = new HashMap<String,Object>();
+	public AjaxResult delete(Long id){
+		AjaxResult result = null;
 		try {
 			int effectCount =  employeeService.updateState(id);
 			if (effectCount>0) {
-				result.put("success", true);
-				result.put("msg", "离职成功");
+				result = new AjaxResult(true, "离职成功");
 			}else {
-				result.put("success", false);
-				result.put("msg", "离职失败");
+				result = new AjaxResult("离职失败");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			result.put("success", false);
-			result.put("msg", "离职异常,请联系管理员");
+			result = new AjaxResult("离职异常,请联系管理员");
 		}
 		return result;
 	}
@@ -58,8 +71,8 @@ public class EmployeeController {
 	
 	@RequestMapping("/employee_save")
 	@ResponseBody
-	public Map save(Employee emp){
-		Map<String, Object> result = new HashMap<String,Object>();
+	public AjaxResult save(Employee emp){
+		AjaxResult result = null;
 		try {
 			emp.setAdmin(false);
 			emp.setInputtime(new Date());
@@ -67,17 +80,14 @@ public class EmployeeController {
 			emp.setPassword("6666");
 			int effectCount = employeeService.save(emp);
 			if (effectCount>0) {
-				result.put("success", true);
-				result.put("msg","保存成功");
+				result = new AjaxResult(true, "保存成功");
 			} else {
-				result.put("success", false);
-				result.put("msg","保存失败");
+				result = new AjaxResult("保存失败");
 			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			result.put("success", false);
-			result.put("msg","保存异常,请联系管理员");
+			result = new AjaxResult("保存异常,请联系管理员");
 		}
 		return result;
 	}
@@ -85,22 +95,19 @@ public class EmployeeController {
 	
 	@RequestMapping("/employee_update")
 	@ResponseBody
-	public Map update(Employee emp){
-		Map<String, Object> result = new HashMap<String,Object>();
+	public AjaxResult update(Employee emp){
+		AjaxResult result = null;
 		try {
 			int effectCount = employeeService.update(emp);
 			if (effectCount>0) {
-				result.put("success", true);
-				result.put("msg","更新成功");
+				result = new AjaxResult(true, "更新成功");
 			} else {
-				result.put("success", false);
-				result.put("msg","更新失败");
+				result = new AjaxResult("更新失败");
 			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			result.put("success", false);
-			result.put("msg","更新异常,请联系管理员");
+			result = new AjaxResult("更新异常,请联系管理员");
 		}
 		return result;
 	}
@@ -116,17 +123,15 @@ public class EmployeeController {
 	
 	@RequestMapping("/login")
 	@ResponseBody
-	public Map login(String username,String password,HttpSession session){
-		Map<String, Object> result = new HashMap<String,Object>();
+	public AjaxResult login(String username,String password,HttpSession session){
+		AjaxResult result = null;
 		
 		Employee user = employeeService.queryByLogin(username,password);
 		if (user !=null) {
 			session.setAttribute(UserContext.USER_IN_SESSION, user);
-			result.put("success", true);
-			result.put("msg", "登录成功");
+			result = new AjaxResult(true, "登录成功");
 		} else {
-			result.put("success", false);
-			result.put("msg", "账号密码有误");
+			result = new AjaxResult("账号密码有误");
 		}
 		return result;
 	}

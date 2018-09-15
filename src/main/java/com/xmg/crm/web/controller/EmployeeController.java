@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.aspectj.lang.annotation.Before;
@@ -123,12 +124,14 @@ public class EmployeeController {
 	
 	@RequestMapping("/login")
 	@ResponseBody
-	public AjaxResult login(String username,String password,HttpSession session){
+	public AjaxResult login(String username,String password,HttpServletRequest request){
+		UserContext.set(request);
 		AjaxResult result = null;
 		
 		Employee user = employeeService.queryByLogin(username,password);
 		if (user !=null) {
-			session.setAttribute(UserContext.USER_IN_SESSION, user);
+			request.getSession().setAttribute(UserContext.USER_IN_SESSION, user);
+			
 			result = new AjaxResult(true, "登录成功");
 		} else {
 			result = new AjaxResult("账号密码有误");

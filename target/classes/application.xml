@@ -38,11 +38,11 @@
 	<!-- 4.事务模板 -->
 	<tx:advice id="advice" transaction-manager="transactionManager">
 		<tx:attributes>
-			<tx:method name="get*" read-only="true" />
-			<tx:method name="query*" read-only="true" />
-			<tx:method name="select*" read-only="true" />
-			<tx:method name="list*" read-only="true" />
-			<tx:method name="*" />
+			<tx:method name="get*" read-only="true" propagation="SUPPORTS"/>
+			<tx:method name="query*" read-only="true" propagation="SUPPORTS"/>
+			<tx:method name="select*" read-only="true" propagation="SUPPORTS"/>
+			<tx:method name="list*" read-only="true" propagation="SUPPORTS"/>
+			<tx:method name="*" propagation="REQUIRED"/>
 		</tx:attributes>
 	</tx:advice>
 	<!-- 5.AOP相关配置 -->
@@ -50,9 +50,15 @@
 		<aop:pointcut expression="execution(* com.xmg.crm.service.impl.*.*(..))"
 			id="pointCut" />
 		<aop:advisor advice-ref="advice" pointcut-ref="pointCut" />
+		<aop:aspect ref="logUtil">
+		    <aop:after method="writeLog" pointcut="execution(* com.xmg.crm.service.impl.*.*(..))"/>
+		</aop:aspect>
 	</aop:config> 
 	<!-- Mapper扫描 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="basePackage" value="com.xmg.crm.mapper"></property>
+	</bean>
+	
+	<bean id="logUtil" class="com.xmg.crm.util.LogUtil">
 	</bean>
 </beans>

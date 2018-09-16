@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.xmg.crm.domain.Permission;
 import com.xmg.crm.mapper.PermissionMapper;
 import com.xmg.crm.page.PageResult;
+import com.xmg.crm.query.PermissionQueryObject;
 import com.xmg.crm.query.QueryObject;
 import com.xmg.crm.service.IPermissionService;
 
@@ -25,6 +26,11 @@ public class PermissionServiceImpl implements IPermissionService {
 		}else {
 			return PageResult.EMPTY;
 		}
+	}
+
+	public PageResult queryByRid(Long rid) {
+		List<Permission> result = dao.queryByRid(rid);
+		return  new PageResult(Long.parseLong(result.size()+""), result);
 	}
 
 }

@@ -42,8 +42,8 @@
 	      <table align="center" style="margin-top: 15px">
 	          <input type="hidden" name="id">
 	          <tr> 
-	               <td>角色编号:<input type="text" name="username"></td>
-	               <td>角色名称:<input type="text" name="username"></td>
+	               <td>角色名称:<input type="text" name="name"></td>
+	               <td>角色编号:<input type="text" name="sn"></td>
 	          </tr>
 	          <tr> 
 	               <td><table id="selfPermission" ></table></td>

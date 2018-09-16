@@ -4,6 +4,9 @@ import java.util.Date;
 
 import org.apache.ibatis.type.Alias;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,6 +25,7 @@ public class Employee {
 
     private String email;
 
+    @JsonFormat(pattern= "yyyy-MM-dd",timezone="GMT+8")
     private Date inputtime;
 
     private Boolean state;

@@ -17,26 +17,11 @@ $(function() {
 		rownumbers:true,
 		singleSelect:true,
 		columns:[[
-		          {title:"账号",field:"username",width:1},
-		          {title:"真实姓名",field:"realname",width:1},
-		          {title:"联系方式",field:"tel",width:1},
-		          {title:"邮箱",field:"email",width:1},
-		          {title:"部门",field:"dept",width:1,formatter:deptFormatter},
-		          {title:"入职时间",field:"inputTime",width:1},
-		          {title:"状态",field:"state",width:1,formatter:statusFormatter},
+		          {title:"角色编号",field:"sn",width:1},
+		          {title:"角色名称",field:"name",width:1},
 		          ]],
 		fitColumns:true,
 		toolbar:'#role_datagrid_bt',
-		onClickRow: function (rowIndex, rowData) {
-			if (rowData.state) {
-				roleDatagridEditBtn.eq(1).linkbutton("enable");
-				roleDatagridEditBtn.eq(2).linkbutton("enable");
-			} else {
-				//让按钮变灰
-				roleDatagridEditBtn.eq(1).linkbutton("disable");
-				roleDatagridEditBtn.eq(2).linkbutton("disable");
-			}
-		}
 	});
 	
 	roleDialog.dialog({
@@ -57,6 +42,9 @@ $(function() {
 		          ]],
 		fitColumns:true,
 		singleSelect:true,
+		onDblClickRow:function(rowIndex,rowData){
+			selfPermission.datagrid("deleteRow",rowIndex);
+		}
 	});
     allPermission.datagrid({
     	url:"/permission_list",
@@ -108,7 +96,9 @@ $(function() {
 				//调用打开方法
 				roleDialog.dialog("open");
 				roleDialog.dialog("setTitle","新增");
-				roleDialogForm.form("clear");
+//				roleDialogForm.form("clear");
+				$("[name='id'],[name='name'],[name='sn']").val("");
+				selfPermission.datagrid("loadData",{rows:[]});
 			},
 			edit: function () {
 				//用户是否有选择记录
@@ -124,6 +114,14 @@ $(function() {
 					}
 					//回显数据
 					roleDialogForm.form("load",rowData);
+					
+					//权限的回显
+					//给selfPermission添加URL
+					selfPermission.datagrid("options").url = "/permission_queryByRid";
+					selfPermission.datagrid("load",{
+						rid:rowData.id,
+					});
+						
 				} else {
 					$.messager.alert("温馨提示","请选择一条需要编辑的数据","warning");
 				}
@@ -172,6 +170,13 @@ $(function() {
 				
 				roleDialogForm.form("submit",{
 					url:url,
+					onSubmit: function(param){    
+				        //获取自身权限集合
+						var selfRows = selfPermission.datagrid("getRows");
+						for (var i = 0; i < selfRows.length; i++) {
+							param["permissions["+i+"].id"] = selfRows[i].id;
+						}
+				    },   
 					success:function (data){
 						data = $.parseJSON(data);
 						if (data.success) {

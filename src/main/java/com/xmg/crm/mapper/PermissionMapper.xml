@@ -39,4 +39,9 @@
           limit #{start},#{rows}
       </if>
   </select>
+  
+  <select id="queryByRid" resultMap="BaseResultMap">
+      SELECT id,name FROM permission WHERE id in(SELECT p_id FROM role_permission WHERE r_id =#{rid})
+  </select>
+  
 </mapper>

@@ -21,4 +21,12 @@ public class PermissionController {
 		PageResult result = permissionService.queryByCondition(qo);
 		return result;
 	}
+	
+	
+	@RequestMapping("/permission_queryByRid")
+	@ResponseBody
+	public PageResult queryByRid(Long rid){
+		PageResult result = permissionService.queryByRid(rid);
+		return result;
+	}
 }

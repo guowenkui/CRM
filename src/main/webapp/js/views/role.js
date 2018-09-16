@@ -1,16 +1,17 @@
 $(function() {
 	//把需要的变量缓存起来
-	var employee_datagrid,employeeDatagridEditBtn,employeeDialog,employeeDialogForm,employeeSearchForm;
+	var role_datagrid,roleDatagridEditBtn,roleDialog,roleDialogForm,roleSearchForm,selfPermission,allPermission;
 	
-	employee_datagrid = $("#employee_datagrid");
-	employeeDatagridEditBtn = $("#employee_datagrid_bt a");
-	employeeDialog = $("#employee_dialog");
-	employeeDialogForm = $("#employee_dialog_form");
-	employeeSearchForm = $("#employee_searchForm");
+	role_datagrid = $("#role_datagrid");
+	roleDatagridEditBtn = $("#role_datagrid_bt a");
+	roleDialog = $("#role_dialog");
+	roleDialogForm = $("#role_dialog_form");
+	roleSearchForm = $("#role_searchForm");
+	selfPermission = $("#selfPermission");
+	allPermission = $("#allPermission");
 	
-	
-	employee_datagrid.datagrid({
-		url:"/employee_list",
+	role_datagrid.datagrid({
+		url:"/role_list",
 		fit:true,
 		pagination:true,
 		rownumbers:true,
@@ -25,65 +26,120 @@ $(function() {
 		          {title:"状态",field:"state",width:1,formatter:statusFormatter},
 		          ]],
 		fitColumns:true,
-		toolbar:'#employee_datagrid_bt',
+		toolbar:'#role_datagrid_bt',
 		onClickRow: function (rowIndex, rowData) {
 			if (rowData.state) {
-				employeeDatagridEditBtn.eq(1).linkbutton("enable");
-				employeeDatagridEditBtn.eq(2).linkbutton("enable");
+				roleDatagridEditBtn.eq(1).linkbutton("enable");
+				roleDatagridEditBtn.eq(2).linkbutton("enable");
 			} else {
 				//让按钮变灰
-				employeeDatagridEditBtn.eq(1).linkbutton("disable");
-				employeeDatagridEditBtn.eq(2).linkbutton("disable");
+				roleDatagridEditBtn.eq(1).linkbutton("disable");
+				roleDatagridEditBtn.eq(2).linkbutton("disable");
 			}
 		}
 	});
 	
-	employeeDialog.dialog({
+	roleDialog.dialog({
 		title: 'My Dialog',    
-	    width: 250,    
-	    height: 250,    
-	    buttons:'#employee_dialog_bb',
+	    width: 550,    
+	    height: 350,    
+	    buttons:'#role_dialog_bb',
 	    closed:true,
 	});
+	
+	selfPermission.datagrid({
+		title:"自身权限",
+		width:250,
+		height: 200,
+		rownumbers:true,
+		columns:[[
+		          {title:"权限名称",field:"name",width:1,align:"center"},
+		          ]],
+		fitColumns:true,
+		singleSelect:true,
+	});
+    allPermission.datagrid({
+    	url:"/permission_list",
+    	title:"所有权限",
+		width:250,
+		height: 200,
+		pagination: true,
+		rownumbers:true,
+		columns:[[
+		          {title:"权限名称",field:"name",width:1,align:"center"},
+		          ]],
+		fitColumns:true,
+		singleSelect:true,
+		onDblClickRow:function(rowIndex,rowData){
+			
+			//判断
+			//获取selfPermission权限集合,一个个判断
+			//如果出现相同的id,选中,否则新增
+			var selfRows = selfPermission.datagrid("getRows");
+			var flag = false;
+			var index = -1;
+			for (var i = 0; i < selfRows.length; i++) {
+				if(selfRows[i].id == rowData.id){
+					flag = true;
+					index = i;
+					break;
+				}
+			}
+			
+			if (flag) {
+				//选中
+				selfPermission.datagrid("selectRow",index);
+			} else {
+				selfPermission.datagrid("appendRow",rowData);
+			}
+		}
+	});
+    
+    var pager = allPermission.datagrid("getPager");
+    pager.pagination({
+    	showPageList:false,
+    	showRefresh:false,
+    	displayMsg:''
+    });
 	
 	//统一管理方法
 	var cmdObj = {
 			add:function() {
 				//调用打开方法
-				employeeDialog.dialog("open");
-				employeeDialog.dialog("setTitle","新增");
-				employeeDialogForm.form("clear");
+				roleDialog.dialog("open");
+				roleDialog.dialog("setTitle","新增");
+				roleDialogForm.form("clear");
 			},
 			edit: function () {
 				//用户是否有选择记录
-				var rowData = employee_datagrid.datagrid("getSelected");
+				var rowData = role_datagrid.datagrid("getSelected");
 				if (rowData) {
 					//调用打开方法
-					employeeDialog.dialog("open");
-					employeeDialog.dialog("setTitle","编辑");
-					employeeDialogForm.form("clear");
+					roleDialog.dialog("open");
+					roleDialog.dialog("setTitle","编辑");
+					roleDialogForm.form("clear");
 					
 					if (rowData.dept) {
 						rowData["dept.id"] = rowData.dept.id;
 					}
 					//回显数据
-					employeeDialogForm.form("load",rowData);
+					roleDialogForm.form("load",rowData);
 				} else {
 					$.messager.alert("温馨提示","请选择一条需要编辑的数据","warning");
 				}
 			},
 			del: function () {
 				//用户是否有选择记录
-				var rowData = employee_datagrid.datagrid("getSelected");
+				var rowData = role_datagrid.datagrid("getSelected");
 				if (rowData) {
 					//询问用户确定需要离职员工
 					$.messager.confirm("温馨提示","你确定需要离职该员工吗",function(yes){
 						if(yes){
-							$.get("/employee_delete?id="+rowData.id,function(data){
+							$.get("/role_delete?id="+rowData.id,function(data){
 								if (data.success) {
 									$.messager.alert("温馨提示", data.msg, "info", function() {
 										//刷新数据
-										employee_datagrid.datagrid("load");
+										role_datagrid.datagrid("load");
 									});
 								} else {
 
@@ -108,22 +164,22 @@ $(function() {
 				var id = $("input[name='id']").val();
 				if (id) {
 					//编辑
-					url = "/employee_update";
+					url = "/role_update";
 				} else {
 					//新增
-					url = "/employee_save";
+					url = "/role_save";
 				}
 				
-				employeeDialogForm.form("submit",{
+				roleDialogForm.form("submit",{
 					url:url,
 					success:function (data){
 						data = $.parseJSON(data);
 						if (data.success) {
 							$.messager.alert("温馨提示",data.msg,"info",function(){
 								//关闭对话框
-								employeeDialog.dialog("close");
+								roleDialog.dialog("close");
 								//刷新数据
-								employee_datagrid.datagrid("load");
+								role_datagrid.datagrid("load");
 							});
 						} else {
 							$.messager.alert("温馨提示",data.msg,"warning");
@@ -133,12 +189,12 @@ $(function() {
 			},
 			searchContent: function () {
 				var param ={};
-				var paramArr = employeeSearchForm.serializeArray();
+				var paramArr = roleSearchForm.serializeArray();
 				for (var i = 0; i < paramArr.length; i++) {
 					param[paramArr[i].name] = paramArr[i].value;
 				}
 				
-				employee_datagrid.datagrid("load",param);
+				role_datagrid.datagrid("load",param);
 			},
 			cancel: function () {
 				

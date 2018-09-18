@@ -71,4 +71,9 @@ public class RoleServiceImpl implements IRoleService {
 			return PageResult.EMPTY;
 		}
 	}
+
+	public List<Long> queryRoleIdByEId(Long eid) {
+		System.out.println("guowenkui=="+dao.queryRoleIdByEId(eid));
+		return dao.queryRoleIdByEId(eid);
+	}
 }

@@ -62,6 +62,11 @@
 	               <td><input class="easyui-combobox" name="dept.id"   
     data-options="valueField:'id',textField:'name',url:'/department_queryForEmp'"></td>
 	          </tr>
+	          <tr> 
+	               <td>角色</td>
+	               <td><input class="easyui-combobox" id="employee_roleCombo" multiple="true" 
+    data-options="valueField:'id',textField:'name',url:'/role_queryRoleForEmp'"></td>
+	          </tr>
 	      </table>
 	    </form>
 	</div>

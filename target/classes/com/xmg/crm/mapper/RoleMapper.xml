@@ -48,4 +48,8 @@
   <delete id="deletePermissionByRid">
       delete from role_permission where r_id = #{id}
   </delete>
+  
+  <select id="queryRoleIdByEId" resultType="long" >
+      select r_id from emp_role where e_id=#{eid}
+  </select>
 </mapper>

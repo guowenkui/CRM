@@ -68,6 +68,14 @@ $(function() {
 					}
 					//回显数据
 					employeeDialogForm.form("load",rowData);
+					
+					//发送请求到后台查询这个员工对应的角色ID--->List<Long>
+					var html = $.ajax({
+						  url: "/role_queryRoleIdByEId?eid="+rowData.id,
+						  async: false
+						 }).responseText;
+					console.log(html);
+					$("#employee_roleCombo").combobox("setValues",$.parseJSON(html));
 				} else {
 					$.messager.alert("温馨提示","请选择一条需要编辑的数据","warning");
 				}
@@ -116,6 +124,14 @@ $(function() {
 				
 				employeeDialogForm.form("submit",{
 					url:url,
+					onSubmit:function(param){
+						var ids = $("#employee_roleCombo").combobox("getValues");
+						console.log(ids);
+						for (var i = 0; i < ids.length; i++) {
+							param["roles["+i+"].id"] = ids[i];
+						}
+						
+					},
 					success:function (data){
 						data = $.parseJSON(data);
 						if (data.success) {

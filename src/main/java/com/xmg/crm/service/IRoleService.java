@@ -12,6 +12,5 @@ public interface IRoleService {
 	Role get(Long id);
 	List<Role> selectAll();
 	PageResult SelectByCondition(QueryObject qo );
-	
-	int deletePermissionByRid(Long rid);
+	List<Long> queryRoleIdByEId(Long eid);
 }

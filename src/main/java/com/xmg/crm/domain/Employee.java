@@ -1,6 +1,7 @@
 package com.xmg.crm.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import org.apache.ibatis.type.Alias;
 
@@ -33,6 +34,8 @@ public class Employee {
     private Boolean admin;
     
     private Department dept;
+    
+    private List<Role> roles;
 
 
 }

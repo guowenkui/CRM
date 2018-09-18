@@ -26,4 +26,6 @@ public interface RoleMapper {
 	
 	int deletePermissionByRid(Long rid);
 
+	List<Long> queryRoleIdByEId(Long eid);
+
 }

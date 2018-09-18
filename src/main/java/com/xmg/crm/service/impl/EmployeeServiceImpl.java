@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.xmg.crm.domain.Employee;
+import com.xmg.crm.domain.Role;
 import com.xmg.crm.mapper.EmployeeMapper;
 import com.xmg.crm.page.PageResult;
 import com.xmg.crm.query.QueryObject;
@@ -18,11 +19,26 @@ public class EmployeeServiceImpl implements IEmployeeService {
 	private EmployeeMapper dao;
 	
 	public int save(Employee emp) {
-		return dao.insert(emp);
+		int effectCount = dao.insert(emp);
+		List<Role> roles = emp.getRoles();
+		if (roles!=null) {
+			for (Role role : roles) {
+				dao.handlerRelation(emp.getId(), role.getId());
+			}
+		}
+		return effectCount;
 	}
 
 	public int update(Employee emp) {
-		return dao.updateByPrimaryKey(emp);
+		int effectCount = dao.updateByPrimaryKey(emp);
+		dao.deleteRelationByEid(emp.getId());
+		List<Role> roles = emp.getRoles();
+		if (roles!=null) {
+			for (Role role : roles) {
+				dao.handlerRelation(emp.getId(), role.getId());
+			}
+		}
+		return effectCount;
 	}
 
 	public int delete(Long id) {

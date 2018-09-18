@@ -1,5 +1,7 @@
 package com.xmg.crm.web.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +22,23 @@ public class RoleController {
 	@RequestMapping("/role")
 	public String index(){
 		return "role";
+	}
+	
+	@RequestMapping("role_queryRoleIdByEId")
+	@ResponseBody
+	public List<Long> queryRoleIdByEId(Long eid){
+		List<Long> result = null;
+		result = service.queryRoleIdByEId(eid);
+		System.out.println(result);
+		return result;
+	}
+	
+	@RequestMapping("/role_queryRoleForEmp")
+	@ResponseBody
+	public List<Role> queryRoleForEmp(){
+		List<Role> result = null;
+		result = service.selectAll();
+		return result;
 	}
 	
 	@RequestMapping("/role_list")

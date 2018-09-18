@@ -25,4 +25,8 @@ public interface EmployeeMapper {
 	Employee queryByLogin(@Param("username")String username, @Param("password")String password);
 
 	int updateState(Long id);
+	
+	int handlerRelation(@Param("eid")Long eid,@Param("rid")Long rid);
+	
+	int deleteRelationByEid(Long eid);
 }

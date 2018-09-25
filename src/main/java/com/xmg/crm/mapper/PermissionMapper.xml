@@ -44,4 +44,13 @@
       SELECT id,name FROM permission WHERE id in(SELECT p_id FROM role_permission WHERE r_id =#{rid})
   </select>
   
+  <select id="queryByResource" resultMap="BaseResultMap">
+       select id,name,resource from permission where resource =#{function}
+  </select>
+  
+  <select id="queryPermissionByEid" resultMap="BaseResultMap">
+      SELECT id,name,resource FROM permission WHERE id in(
+      SELECT p_id FROM role_permission WHERE  r_id in(
+      SELECT r_id FROM emp_role WHERE e_id = #{id}))
+  </select>
 </mapper>

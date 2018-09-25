@@ -2,6 +2,7 @@ package com.xmg.crm.web.controller;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,10 +18,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xmg.crm.domain.Employee;
+import com.xmg.crm.domain.Permission;
 import com.xmg.crm.page.AjaxResult;
 import com.xmg.crm.page.PageResult;
 import com.xmg.crm.query.EmployeeQueryObject;
 import com.xmg.crm.service.IEmployeeService;
+import com.xmg.crm.service.IPermissionService;
 import com.xmg.crm.util.UserContext;
 
 import lombok.val;
@@ -31,6 +34,8 @@ public class EmployeeController {
 	
 	@Autowired
 	private IEmployeeService employeeService;
+	@Autowired
+	private IPermissionService permissionService;
 	
 	@RequestMapping("/employee")
 	public String index(){
@@ -132,6 +137,9 @@ public class EmployeeController {
 		if (user !=null) {
 			request.getSession().setAttribute(UserContext.USER_IN_SESSION, user);
 			
+			//查询该用户的权限
+			List<Permission> userPermission = permissionService.queryPermissionByEid(user.getId());
+			request.getSession().setAttribute(UserContext.PERMISSION_IN_SESSION, userPermission);
 			result = new AjaxResult(true, "登录成功");
 		} else {
 			result = new AjaxResult("账号密码有误");

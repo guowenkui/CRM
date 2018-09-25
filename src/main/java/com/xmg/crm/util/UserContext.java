@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 public class UserContext {
 	
 	public static final String USER_IN_SESSION = "userINsession";
+	public static final String PERMISSION_IN_SESSION = "permissionINsession";
 
 	public static ThreadLocal<HttpServletRequest> local = new ThreadLocal<HttpServletRequest>();
 	

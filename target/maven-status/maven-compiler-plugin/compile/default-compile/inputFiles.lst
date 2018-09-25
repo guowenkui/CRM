@@ -18,6 +18,7 @@ E:\JavaApps\CRM-Maven\src\main\java\com\xmg\crm\service\impl\PermissionServiceIm
 E:\JavaApps\CRM-Maven\src\main\java\com\xmg\crm\service\impl\DepartmentServiceImpl.java
 E:\JavaApps\CRM-Maven\src\main\java\com\xmg\crm\service\IPermissionService.java
 E:\JavaApps\CRM-Maven\src\main\java\com\xmg\crm\web\controller\EmployeeController.java
+E:\JavaApps\CRM-Maven\src\main\java\com\xmg\crm\util\PermissionUtils.java
 E:\JavaApps\CRM-Maven\src\main\java\com\xmg\crm\web\controller\RoleController.java
 E:\JavaApps\CRM-Maven\src\main\java\com\xmg\crm\util\LogUtil.java
 E:\JavaApps\CRM-Maven\src\main\java\com\xmg\crm\web\interceptor\LoginInterceptor.java
